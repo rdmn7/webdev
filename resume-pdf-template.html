@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume PDF Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* PDF Resume container */
+        #resume-pdf-content {
+            display: block;
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background-color: white;
+        }
+        
+        /* Resume layout */
+        .pdf-resume {
+            display: flex;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Main content styles */
+        .pdf-main-content {
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        
+        /* Header section */
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 20px;
+        }
+        
+        .pdf-header-left {
+            flex: 2;
+        }
+        
+        .pdf-header-right {
+            flex: 1;
+            text-align: right;
+        }
+        
+        .pdf-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #0056b3;
+            margin-bottom: 5px;
+            letter-spacing: -0.02em;
+        }
+        
+        .pdf-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 12px;
+        }
+        
+        .pdf-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: auto;
+            border: 3px solid #0056b3;
+        }
+        
+        .pdf-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Contact information */
+        .pdf-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .pdf-contact p {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        
+        .pdf-contact p i {
+            color: #0056b3;
+            width: 16px;
+        }
+        
+        /* Summary section */
+        .pdf-summary {
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 20px 0;
+            text-align: left;
+            color: #444;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Section styles */
+        .pdf-section {
+            margin-bottom: 25px;
+        }
+        
+        .pdf-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #0056b3;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        
+        /* Two column layout */
+        .pdf-two-column {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .pdf-left-column {
+            flex: 2;
+        }
+        
+        .pdf-right-column {
+            flex: 1;
+        }
+        
+        /* Skills section */
+        .pdf-skills {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .pdf-skill-category {
+            margin-bottom: 15px;
+        }
+        
+        .pdf-skill-category h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .pdf-skill-category p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        /* Language section */
+        .pdf-language-section {
+            margin-bottom: 25px;
+        }
+        
+        .pdf-language-item {
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pdf-language-item p {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0;
+        }
+        
+        .pdf-level {
+            font-weight: 400;
+            color: #666;
+        }
+        
+        /* Skill bars */
+        .pdf-skill-bar {
+            margin-bottom: 12px;
+        }
+        
+        .pdf-skill-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .pdf-skill-bar-outer {
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .pdf-skill-bar-inner {
+            height: 100%;
+            background-color: #0056b3;
+            border-radius: 3px;
+        }
+        
+        /* Experience section */
+        .pdf-job {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pdf-job:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .pdf-job-header {
+            margin-bottom: 10px;
+        }
+        
+        .pdf-job-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+            margin-bottom: 3px;
+        }
+        
+        .pdf-company-period {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .pdf-company {
+            font-weight: 500;
+            font-size: 15px;
+            color: #0056b3;
+            margin: 0;
+        }
+        
+        .pdf-period {
+            font-size: 14px;
+            color: #777;
+            font-style: italic;
+        }
+        
+        .pdf-job ul {
+            margin: 8px 0 0 0;
+            padding-left: 18px;
+        }
+        
+        .pdf-job ul li {
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #444;
+            line-height: 1.5;
+        }
+        
+        /* Education section */
+        .pdf-education {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .pdf-education-item {
+            margin-bottom: 15px;
+        }
+        
+        .pdf-education-item h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .pdf-education-item p {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .pdf-education-item .pdf-year {
+            font-size: 13px;
+            color: #0056b3;
+            margin-top: 3px;
+            font-weight: 500;
+            font-style: italic;
+        }
+        
+        /* Certifications section */
+        .pdf-certifications {
+            margin-top: 20px;
+        }
+        
+        .pdf-cert-item {
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pdf-cert-item:last-child {
+            border-bottom: none;
+        }
+        
+        .pdf-cert-item p {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .pdf-cert-item .pdf-year {
+            font-size: 13px;
+            color: #777;
+            font-style: italic;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="resume-pdf-content">
+        <div class="pdf-resume">
+            <div class="pdf-main-content">
+                <!-- Header with photo -->
+                <div class="pdf-header">
+                    <div class="pdf-header-left">
+                        <h1>Ridvan Ermis</h1>
+                        <h2>Freelance Automation Specialist</h2>
+                        <!-- Contact details -->
+                        <div class="pdf-contact">
+                            <p><i class="fab fa-linkedin"></i> linkedin.com/in/rermis</p>
+                            <p><i class="fab fa-github"></i> github.com/rdmn7</p>
+                            <p><i class="fas fa-certificate"></i> credly.com/users/ridvan-ermis/badges</p>
+                            <p class="company-info" style="font-size: 0.8rem; color: #777; margin-top: 0.5rem;">
+                                RDVN IT Consultancy ● KVK: 92391087 ● BTW: NL004951582B60
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pdf-header-right">
+                        <div class="pdf-photo">
+                            <img src="myface.jpg" alt="Ridvan Ermis">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Summary -->
+                <p class="pdf-summary">As a Consultant, I have a strong passion for automating various cloud solutions, with expertise in DevOps, automation and virtualization. With over a decade of IT wizardry under my belt, I'm on a mission to automate the world! As a DevOps guru, coding connoisseur, and infrastructure whisperer, I specialize in transforming complex systems into efficient, scalable solutions that adapt to evolving business needs.</p>
+                
+                <!-- Two-column layout for main content -->
+                <div class="pdf-two-column">
+                    <div class="pdf-left-column">
+                        <!-- Professional Experience -->
+                        <div class="pdf-section">
+                            <h3>Professional Experience</h3>
+                            
+                            <div class="pdf-job">
+                                <div class="pdf-job-header">
+                                    <h4>Infrastructure Specialist</h4>
+                                    <div class="pdf-company-period">
+                                        <p class="pdf-company">RDW</p>
+                                        <p class="pdf-period">Mar 2024 - Present</p>
+                                    </div>
+                                </div>
+                                <p>As a freelance Technical Consultant and Infrastructure Specialist at RDW, 
+                                I support the transition to a modern and automated IT environment. I implement DevOps solutions and infrastructure as code, 
+                                advise on strategic system changes and guide teams in the adoption of new technologies. Within the Storage, 
+                                Server and Hosting service team, I am specifically responsible for designing and implementing automation and Infrastructure as Code, 
+                                ensuring efficient and future-proof IT solutions.</p>
+                                <ul>
+                                    <li>Implementing DevOps solutions and infrastructure as code, enhancing automation capabilities</li>
+                                    <li>Advising on strategic system changes and guiding teams in adopting new technologies</li>
+                                    <li>Designing efficient and future-proof IT solutions within the Storage, Server, and Hosting service team</li>
+                                    <li>Working with Terraform, Azure DevOps, PowerShell, Ansible, Packer, OpenShift, and CI/CD pipelines</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pdf-job">
+                                <div class="pdf-job-header">
+                                    <h4>Owner</h4>
+                                    <div class="pdf-company-period">
+                                        <p class="pdf-company">RDVN IT Consultancy</p>
+                                        <p class="pdf-period">Mar 2024 - Present</p>
+                                    </div>
+                                </div>
+                                <p>RDVN IT Consultancy, the key to technology advancement for businesses. 
+                                Expertise in Platform Engineering, Automation, Infrastructure as Code, DevOps and hybrid platform solutions. 
+                                Let RDVN IT be your guide to innovative and customized IT consulting.</p>
+                                <ul>
+                                    <li>Providing expertise in Platform Engineering and Automation services</li>
+                                    <li>Developing innovative solutions for Infrastructure as Code and DevOps implementations</li>
+                                    <li>Creating tailored hybrid platform solutions for diverse client requirements</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pdf-job">
+                                <div class="pdf-job-header">
+                                    <h4>Technical Consultant</h4>
+                                    <div class="pdf-company-period">
+                                        <p class="pdf-company">Cegeka - DAS</p>
+                                        <p class="pdf-period">Apr 2022 - Feb 2024</p>
+                                    </div>
+                                </div>
+                                <p>At Cegeka, I share knowledge about Cloud Infrastructure in the Cloud Competence Center and promote Cloud Native working. 
+                                As a Cegeka Consultant at DAS Legal Aid, I work as a DevOps Engineer in the Middleware department. 
+                                I advise and participate in DAS' transition to a Hybrid Cloud solution with Azure and VMware's private cloud, and work on new solutions.</p>
+                                <ul>
+                                    <li>Assisting companies in transitioning from On-Premises to Azure Cloud</li>
+                                    <li>Onboarding of existing Azure or on-premises infrastructure</li>
+                                    <li>Maintenance of On-Premises components, automated if possible</li>
+                                    <li>Implementation of "infrastructure as code" and management of the code</li>
+                                    <li>Establishment of DevOps CI/CD pipelines</li>
+                                    <li>Planning and implementing major system changes</li>
+                                    <li>Drafting and updating work instructions and manuals</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pdf-job">
+                                <div class="pdf-job-header">
+                                    <h4>Engineer</h4>
+                                    <div class="pdf-company-period">
+                                        <p class="pdf-company">CAM IT Solutions</p>
+                                        <p class="pdf-period">Jan 2019 - Mar 2022</p>
+                                    </div>
+                                </div>
+                                <p>CAM IT Solutions is a service organization and platform provider at hospitals (CURE&CARE). The platform, the CAMCUBE, is a self-developed and compiled private cloud infrastructure. The workspace team is responsible for managing the customer environment and further developing the environment. In addition to management work, migration projects are performed to new Windows 10 builds/releases and migration of the Citrix environment to the VMware Horizon environment.</p>
+                                <ul>
+                                    <li>Automated setup, implementation and management of various workplace solutions</li>
+                                    <li>Writing various PowerShell scripts to deliver the right information for different projects</li>
+                                    <li>Making changes using PowerShell so that they can later be used for DSC</li>
+                                    <li>Making changes to components through upgrades or new deployments (automated where possible)</li>
+                                    <li>Making design improvements</li>
+                                    <li>Giving knowledge sessions</li>
+                                    <li>Updating ARM Templates</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pdf-job">
+                                <div class="pdf-job-header">
+                                    <h4>System Engineer</h4>
+                                    <div class="pdf-company-period">
+                                        <p class="pdf-company">SLTN Inter Access</p>
+                                        <p class="pdf-period">Apr 2015 - May 2018</p>
+                                    </div>
+                                </div>
+                                <p>SLTN Inter Access specializes in the complete unburdening of ICT infrastructures. 
+                                Be it architecture, integration and migration projects, managed services, cloud services, application services and secondment. 
+                                System engineers in the managed services department are responsible for managing and further developing the customer environment.</p>
+                                <ul>
+                                    <li>Managed and automated system administration tasks using PowerShell</li>
+                                    <li>Implemented and managed Office 365, Citrix, and MDM solutions</li>
+                                    <li>Configured monitoring systems for 10+ clients using NagiosXI</li>
+                                    <li>Maintained and deployed virtual environments in VMware vSphere</li>
+                                    <li>Advised management on ICT improvements and implemented solutions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Education -->
+                        <div class="pdf-section">
+                            <h3>Education</h3>
+                            <div class="pdf-education">
+                                <div class="pdf-education-item">
+                                    <h4>Prepress/Desktop Publishing and Digital Imaging Design</h4>
+                                    <p>Grafisch Lyceum Utrecht, MBO - NIV4</p>
+                                    <p class="pdf-year">2010 – 2012</p>
+                                </div>
+                                <div class="pdf-education-item">
+                                    <h4>Information Technology</h4>
+                                    <p>ROC Midden Nederland, MBO4</p>
+                                    <p class="pdf-year">2007 – 2010</p>
+                                </div>
+                                <div class="pdf-education-item">
+                                    <h4>ICT - Systeembeheer</h4>
+                                    <p>De Boogschutter, VMBO</p>
+                                    <p class="pdf-year">2003 – 2007</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    
+                    <div class="pdf-right-column">
+                        <!-- Expertise -->
+                        <div class="pdf-section">
+                            <h3>Expertise</h3>
+                            <div class="pdf-skills">
+                                <div class="pdf-skill-category">
+                                    <h4>Cloud & Infrastructure</h4>
+                                    <p>Expertise in designing and implementing modern cloud infrastructure solutions with focus on automation, scalability, and security.</p>
+                                    <p style="margin-top: 5px;">Microsoft Azure, Terraform, Docker, OpenShift, Rubrik, VxRail, Aria Suite</p>
+                                </div>
+                                <div class="pdf-skill-category">
+                                    <h4>DevOps & Automation</h4>
+                                    <p>Implementation of DevOps practices and automation tools to streamline deployment, testing, and infrastructure management.</p>
+                                    <p style="margin-top: 5px;">Git, Ansible, Python, PowerShell, Azure DevOps, CI/CD, Packer, Infrastructure as Code</p>
+                                </div>
+                                <div class="pdf-skill-category">
+                                    <h4>Virtualization & Platforms</h4>
+                                    <p>Deep expertise in enterprise virtualization platforms and workspace solutions for secure, scalable environments.</p>
+                                    <p style="margin-top: 5px;">VMware vSphere, VMware Horizon, VMware WorkspaceONE, Citrix, Office 365</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Skills with bars -->
+                        <div class="pdf-section">
+                            <h3>Technical Skills</h3>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Microsoft Azure</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Terraform</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>PowerShell</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Ansible</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>CI/CD</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Git</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Packer</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>VMware vSphere</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Azure DevOps</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>OpenShift</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>Python</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="pdf-skill-bar">
+                                <div class="pdf-skill-bar-label">
+                                    <span>VMware Horizon</span>
+                                </div>
+                                <div class="pdf-skill-bar-outer">
+                                    <div class="pdf-skill-bar-inner" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Languages -->
+                        <div class="pdf-section">
+                            <h3>Languages</h3>
+                            <div class="pdf-language-item">
+                                <p>Dutch</p>
+                            </div>
+                            <div class="pdf-language-item">
+                                <p>English</p>
+                            </div>
+                            <div class="pdf-language-item">
+                                <p>Turkish</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Certifications -->
+                        <div class="pdf-section">
+                            <h3>Certifications</h3>
+                            <div class="pdf-certifications">
+                                <div class="pdf-cert-item">
+                                    <p>HashiCorp Certified: Terraform Associate (003)</p>
+                                    <p class="pdf-year">May 2023</p>
+                                </div>
+                                <div class="pdf-cert-item">
+                                    <p>Microsoft Certified: Azure Administrator Associate</p>
+                                    <p class="pdf-year">May 2022</p>
+                                </div>
+                                <div class="pdf-cert-item">
+                                    <p>VMware Certified Professional - Digital Workspace 2021</p>
+                                    <p class="pdf-year">Apr 2021</p>
+                                </div>
+                                <div class="pdf-cert-item">
+                                    <p>VMware vSphere 6.7 Foundations</p>
+                                    <p class="pdf-year">Apr 2021</p>
+                                </div>
+                                <div class="pdf-cert-item">
+                                    <p>Imprivata OneSign Certified Administrator</p>
+                                    <p class="pdf-year">Oct 2020</p>
+                                </div>
+                                <div class="pdf-cert-item">
+                                    <p>Citrix Endpoint Management</p>
+                                    <p class="pdf-year">Mar 2019</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

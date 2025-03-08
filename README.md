@@ -1,59 +1,96 @@
-# Web Development Portfolio
+# Ridvan Ermis - Resume Website
 
-This repository contains various web development projects, including resume and CV templates.
+A modern, responsive resume website for Ridvan Ermis, a Freelance Automation Specialist, built with HTML, CSS, and JavaScript.
 
-## Resume & CV Project
+## Features
 
-A modern, responsive resume/CV template designed for both web viewing and PDF export. The project includes:
+- Clean, modern design inspired by professional resume websites
+- Fully responsive layout that works on all device sizes
+- Dark mode toggle with system preference detection and user preference persistence
+- Interactive elements including animations and hover effects
+- Organized sections for skills, work experience, education, and certifications
+- Social media and contact links
 
-### Features
+## Technologies Used
 
-- Clean, professional design with modern typography
-- Responsive layout that works well on various screen sizes
-- PDF-optimized template for generating printable resumes
-- Customizable sections for experience, skills, education, and certifications
-- Skills visualization with progress bars
-- Professional layout with consistent spacing and hierarchy
+- HTML5
+- CSS3 (with CSS variables, Flexbox, and Grid)
+- JavaScript (ES6+)
+- Font Awesome for icons
+- Google Fonts (Inter)
+- LocalStorage for theme preference persistence
 
-### Files
+## Setup and Usage
 
-- `index.html` - Interactive web version of the resume
-- `resume-pdf-template.html` - PDF-optimized version for printing/exporting
-- `styles.css` - Styling for the web version
-- `script.js` - JavaScript functionality for interactive elements
+1. Clone or download this repository
+2. Open `index.html` in your browser to view the website
+3. Customize the content in `index.html` to update your personal information
+4. Modify styles in `styles.css` to change the appearance
+5. Edit the animations and interactions in `script.js` as needed
 
-### Usage
+## Customization
 
-#### Viewing the Resume
+### Colors
 
-Simply open the `index.html` file in any modern web browser to view the interactive web version of the resume.
+The color scheme can be easily modified by changing the CSS variables in the `:root` selector in `styles.css`:
 
-#### Generating a PDF
+```css
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #4b5563;
+    /* other color variables */
+}
+```
 
-1. Open the `resume-pdf-template.html` file in a web browser
-2. Use the browser's print functionality (Ctrl+P or Cmd+P)
-3. Set the destination to "Save as PDF"
-4. Adjust margins to "None" if needed
-5. Save the PDF
+For dark mode customization, modify the `[data-theme="dark"]` selector variables:
 
-#### Customizing Content
+```css
+[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --secondary-color: #9ca3af;
+    /* other dark theme color variables */
+}
+```
 
-Edit the HTML files to replace the placeholder content with your own information:
+### Dark Mode Toggle
 
-- Personal details
-- Professional experience
-- Skills and expertise
-- Education and certifications
-- Contact information
+The website includes a dark mode toggle that:
+- Respects the user's system preference by default
+- Saves the user's preference in localStorage
+- Provides a smooth transition between light and dark themes
+- Shows a sun icon in dark mode and a moon icon in light mode
 
-#### Customizing Styles
+### Profile Picture
 
-Modify the CSS to change colors, fonts, spacing, and other visual elements to match your personal brand.
+Replace `Untitled.jpg` with your own profile picture. For best results, use a square image.
+
+### Adding More Sections
+
+You can add more sections by following the existing HTML structure:
+
+```html
+<section class="new-section">
+    <div class="container">
+        <h3 class="section-title">New Section Title</h3>
+        <!-- Your content here -->
+    </div>
+</section>
+```
+
+## Deployment
+
+This is a static website that can be deployed to any web hosting service, including:
+
+- GitHub Pages
+- Netlify
+- Vercel
+- Any standard web hosting provider
 
 ## License
 
-This project is available for personal use. Please provide attribution if you use or modify these templates.
+This project is available for personal and commercial use.
 
-## Contact
+## Credits
 
-For questions or customization requests, please reach out via GitHub.
+- Profile picture: Ridvan Ermis
+- Design inspiration: [Rhino Resumes](https://rhinoresumes.framer.website) 
